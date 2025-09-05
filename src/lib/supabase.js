@@ -21,13 +21,12 @@ export const saveProfile = async (profileData) => {
   const { data, error } = await supabase
     .from('profiles')
     .upsert({
-      id: profileData.id,
-      creativity: profileData.creativity,
-      technical: profileData.technical,
-      leadership: profileData.leadership,
-      coding: profileData.coding,
-      problem_solving: profileData.problemSolving,
-      created_at: new Date().toISOString(),
+      user_id: profileData.id,
+      attr1: profileData.attr1,
+      attr2: profileData.attr2,
+      attr3: profileData.attr3,
+      attr4: profileData.attr4,
+      attr5: profileData.attr5,
       updated_at: new Date().toISOString()
     })
     .select()
@@ -38,18 +37,18 @@ export const saveProfile = async (profileData) => {
 export const getGroupAverages = async () => {
   const { data, error } = await supabase
     .from('profiles')
-    .select('creativity, technical, leadership, coding, problem_solving')
+    .select('attr1, attr2, attr3, attr4, attr5')
 
   if (error) return { data: null, error }
 
   if (!data || data.length === 0) {
     return { 
       data: {
-        creativity: 50,
-        technical: 50,
-        leadership: 50,
-        coding: 50,
-        problemSolving: 50,
+        attr1: 50,
+        attr2: 50,
+        attr3: 50,
+        attr4: 50,
+        attr5: 50,
         count: 0
       }, 
       error: null 
@@ -57,11 +56,11 @@ export const getGroupAverages = async () => {
   }
 
   const averages = {
-    creativity: Math.round(data.reduce((sum, p) => sum + p.creativity, 0) / data.length),
-    technical: Math.round(data.reduce((sum, p) => sum + p.technical, 0) / data.length),
-    leadership: Math.round(data.reduce((sum, p) => sum + p.leadership, 0) / data.length),
-    coding: Math.round(data.reduce((sum, p) => sum + p.coding, 0) / data.length),
-    problemSolving: Math.round(data.reduce((sum, p) => sum + p.problem_solving, 0) / data.length),
+    attr1: Math.round(data.reduce((sum, p) => sum + p.attr1, 0) / data.length),
+    attr2: Math.round(data.reduce((sum, p) => sum + p.attr2, 0) / data.length),
+    attr3: Math.round(data.reduce((sum, p) => sum + p.attr3, 0) / data.length),
+    attr4: Math.round(data.reduce((sum, p) => sum + p.attr4, 0) / data.length),
+    attr5: Math.round(data.reduce((sum, p) => sum + p.attr5, 0) / data.length),
     count: data.length
   }
 

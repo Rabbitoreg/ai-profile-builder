@@ -8,11 +8,11 @@ import { downloadRadarChart } from './utils/imageExport'
 const ConferenceProfileBuilder = () => {
   const [userId] = useState(() => uuidv4())
   const [skills, setSkills] = useState({
-    creativity: 50,
-    technical: 50,
-    leadership: 50,
-    coding: 50,
-    problemSolving: 50
+    attr1: 50,
+    attr2: 50,
+    attr3: 50,
+    attr4: 50,
+    attr5: 50
   })
   const [groupAverages, setGroupAverages] = useState(null)
   const [showComparison, setShowComparison] = useState(false)
@@ -22,34 +22,34 @@ const ConferenceProfileBuilder = () => {
 
   const skillConfig = [
     {
-      key: 'creativity',
-      label: 'Creativity & Innovation',
-      description: 'Ability to think outside the box and generate novel ideas',
+      key: 'attr1',
+      label: 'Attribute 1',
+      description: 'First skill attribute',
       color: '#F54900'
     },
     {
-      key: 'technical',
-      label: 'Technical Skills',
-      description: 'Proficiency in technical tools, programming, and systems',
+      key: 'attr2',
+      label: 'Attribute 2',
+      description: 'Second skill attribute',
       color: '#009689'
     },
     {
-      key: 'leadership',
-      label: 'Leadership',
-      description: 'Ability to guide teams and make strategic decisions',
+      key: 'attr3',
+      label: 'Attribute 3',
+      description: 'Third skill attribute',
       color: '#104E64'
     },
     {
-      key: 'coding',
-      label: 'Coding Skills',
-      description: 'Expertise in writing code',
+      key: 'attr4',
+      label: 'Attribute 4',
+      description: 'Fourth skill attribute',
       color: '#FE9A00'
     },
     {
-      key: 'problemSolving',
-      label: 'Problem Solving',
-      description: 'Analytical thinking and solution-finding capabilities',
-      color: '#FE9A00'
+      key: 'attr5',
+      label: 'Attribute 5',
+      description: 'Fifth skill attribute',
+      color: '#8E44AD'
     }
   ]
 
@@ -197,11 +197,11 @@ const ConferenceProfileBuilder = () => {
                           style={{ backgroundColor: skill.color }}
                         />
                         <span className="text-sm font-normal text-cod-gray truncate">
-                          {content[`skill_${skill.key}_label`] || skill.label}
+                          {content[`${skill.key}_label`] || skill.label}
                         </span>
                       </div>
                       <p className="text-xs text-storm-gray">
-                        {content[`skill_${skill.key}_description`] || skill.description}
+                        {content[`${skill.key}_description`] || skill.description}
                       </p>
                     </div>
                     
@@ -278,13 +278,12 @@ const ConferenceProfileBuilder = () => {
               {showComparison && groupAverages && (
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-500">
-                    {Math.round((groupAverages.creativity + groupAverages.technical + groupAverages.leadership + groupAverages.coding + groupAverages.problemSolving) / 5)}
+                    {Math.round((groupAverages.attr1 + groupAverages.attr2 + groupAverages.attr3 + groupAverages.attr4 + groupAverages.attr5) / 5)}
                   </div>
                   <div className="text-xs text-storm-gray">Group Avg</div>
                 </div>
               )}
             </div>
-
             {/* Radar Chart */}
             <div id="radar-chart-container" className="mb-6 p-8 bg-white rounded-lg" style={{minWidth: '500px', minHeight: '500px'}}>
               <RadarChart 

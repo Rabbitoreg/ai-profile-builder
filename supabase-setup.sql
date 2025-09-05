@@ -1,13 +1,14 @@
 -- Create profiles table
 CREATE TABLE IF NOT EXISTS profiles (
-  id UUID PRIMARY KEY,
-  creativity INTEGER NOT NULL DEFAULT 50,
-  technical INTEGER NOT NULL DEFAULT 50,
-  leadership INTEGER NOT NULL DEFAULT 50,
-  communication INTEGER NOT NULL DEFAULT 50,
-  problem_solving INTEGER NOT NULL DEFAULT 50,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL,
+  attr1 INTEGER NOT NULL DEFAULT 50,
+  attr2 INTEGER NOT NULL DEFAULT 50,
+  attr3 INTEGER NOT NULL DEFAULT 50,
+  attr4 INTEGER NOT NULL DEFAULT 50,
+  attr5 INTEGER NOT NULL DEFAULT 50,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 -- Create content table for configurable text
@@ -24,16 +25,16 @@ INSERT INTO content (key, value) VALUES
   ('subtitle', 'Adjust the sliders to create your professional profile and see it visualized in real-time'),
   ('attributes_title', 'Profile Attributes'),
   ('visualization_title', 'Profile Visualization'),
-  ('skill_creativity_label', 'Creativity & Innovation'),
-  ('skill_creativity_description', 'Ability to think outside the box and generate novel ideas'),
-  ('skill_technical_label', 'Technical Skills'),
-  ('skill_technical_description', 'Proficiency in technical tools, programming, and systems'),
-  ('skill_leadership_label', 'Leadership'),
-  ('skill_leadership_description', 'Ability to guide teams and make strategic decisions'),
-  ('skill_communication_label', 'Communication'),
-  ('skill_communication_description', 'Effectiveness in conveying ideas and collaborating'),
-  ('skill_problemSolving_label', 'Problem Solving'),
-  ('skill_problemSolving_description', 'Analytical thinking and solution-finding capabilities')
+  ('attr1_label', 'Creativity & Innovation'),
+  ('attr1_description', 'Ability to think outside the box and generate novel ideas'),
+  ('attr2_label', 'Technical Skills'),
+  ('attr2_description', 'Proficiency in technical tools, programming, and systems'),
+  ('attr3_label', 'Leadership'),
+  ('attr3_description', 'Ability to guide teams and make strategic decisions'),
+  ('attr4_label', 'Communication'),
+  ('attr4_description', 'Effectiveness in conveying ideas and collaborating'),
+  ('attr5_label', 'Problem Solving'),
+  ('attr5_description', 'Analytical thinking and solution-finding capabilities')
 ON CONFLICT (key) DO NOTHING;
 
 -- Enable Row Level Security
@@ -47,21 +48,21 @@ CREATE POLICY "Allow all operations on content" ON content FOR ALL USING (true);
 -- Create function to get group averages
 CREATE OR REPLACE FUNCTION get_group_averages()
 RETURNS TABLE (
-  creativity NUMERIC,
-  technical NUMERIC,
-  leadership NUMERIC,
-  communication NUMERIC,
-  problem_solving NUMERIC,
+  attr1 NUMERIC,
+  attr2 NUMERIC,
+  attr3 NUMERIC,
+  attr4 NUMERIC,
+  attr5 NUMERIC,
   count BIGINT
 ) AS $$
 BEGIN
   RETURN QUERY
   SELECT 
-    ROUND(AVG(p.creativity)) as creativity,
-    ROUND(AVG(p.technical)) as technical,
-    ROUND(AVG(p.leadership)) as leadership,
-    ROUND(AVG(p.communication)) as communication,
-    ROUND(AVG(p.problem_solving)) as problem_solving,
+    ROUND(AVG(p.attr1)) as attr1,
+    ROUND(AVG(p.attr2)) as attr2,
+    ROUND(AVG(p.attr3)) as attr3,
+    ROUND(AVG(p.attr4)) as attr4,
+    ROUND(AVG(p.attr5)) as attr5,
     COUNT(*) as count
   FROM profiles p;
 END;
