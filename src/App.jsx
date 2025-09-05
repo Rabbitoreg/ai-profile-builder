@@ -145,7 +145,7 @@ const ConferenceProfileBuilder = () => {
 
   const radarData = useMemo(() => {
     return skillConfig.map(skill => ({
-      skill: content[`skill_${skill.key}_label`] || skill.label,
+      skill: content[`skill_${skill.key}_chart_label`] || skill.label,
       key: skill.key,
       value: skills[skill.key] || 0,
       fullMark: 100
@@ -305,13 +305,13 @@ const ConferenceProfileBuilder = () => {
                 <div className="flex-1">
                   <span className="text-storm-gray">Highest: </span>
                   <span className="text-cod-gray font-medium">
-                    {highestSkill.label.split(' ')[0]} ({skills[highestSkill.key]})
+                    {content[`skill_${highestSkill.key}_label`] || highestSkill.label} ({skills[highestSkill.key]})
                   </span>
                 </div>
                 <div className="flex-1">
                   <span className="text-storm-gray">Lowest: </span>
                   <span className="text-cod-gray font-medium">
-                    {lowestSkill.label.split(' ')[0]} ({skills[lowestSkill.key]})
+                    {content[`skill_${lowestSkill.key}_label`] || lowestSkill.label} ({skills[lowestSkill.key]})
                   </span>
                 </div>
               </div>

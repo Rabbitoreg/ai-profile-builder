@@ -25,16 +25,21 @@ INSERT INTO content (key, value) VALUES
   ('subtitle', 'Adjust the sliders to create your professional profile and see it visualized in real-time'),
   ('attributes_title', 'Profile Attributes'),
   ('visualization_title', 'Profile Visualization'),
-  ('attr1_label', 'Creativity & Innovation'),
-  ('attr1_description', 'Ability to think outside the box and generate novel ideas'),
-  ('attr2_label', 'Technical Skills'),
-  ('attr2_description', 'Proficiency in technical tools, programming, and systems'),
-  ('attr3_label', 'Leadership'),
-  ('attr3_description', 'Ability to guide teams and make strategic decisions'),
-  ('attr4_label', 'Communication'),
-  ('attr4_description', 'Effectiveness in conveying ideas and collaborating'),
-  ('attr5_label', 'Problem Solving'),
-  ('attr5_description', 'Analytical thinking and solution-finding capabilities')
+  ('skill_attr1_label', 'Creativity & Innovation'),
+  ('skill_attr1_description', 'Ability to think outside the box and generate novel ideas'),
+  ('skill_attr1_chart_label', 'Creativity'),
+  ('skill_attr2_label', 'Technical Skills'),
+  ('skill_attr2_description', 'Proficiency in technical tools, programming, and systems'),
+  ('skill_attr2_chart_label', 'Technical'),
+  ('skill_attr3_label', 'Leadership'),
+  ('skill_attr3_description', 'Ability to guide teams and make strategic decisions'),
+  ('skill_attr3_chart_label', 'Leadership'),
+  ('skill_attr4_label', 'Communication'),
+  ('skill_attr4_description', 'Effectiveness in conveying ideas and collaborating'),
+  ('skill_attr4_chart_label', 'Communication'),
+  ('skill_attr5_label', 'Problem Solving'),
+  ('skill_attr5_description', 'Analytical thinking and solution-finding capabilities'),
+  ('skill_attr5_chart_label', 'Problem Solving')
 ON CONFLICT (key) DO NOTHING;
 
 -- Enable Row Level Security

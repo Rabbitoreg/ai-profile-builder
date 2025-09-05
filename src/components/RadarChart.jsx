@@ -1,7 +1,7 @@
 import React from 'react'
 import { RadarChart as RechartsRadar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend } from 'recharts'
 
-const RadarChart = ({ data, averageData = null, size = 280, showAverage = false }) => {
+const RadarChart = ({ data, averageData = null, size = 400, showAverage = false }) => {
   // Transform data for Recharts format
   const chartData = data.map(item => ({
     skill: item.skill,
@@ -12,18 +12,18 @@ const RadarChart = ({ data, averageData = null, size = 280, showAverage = false 
   return (
     <div className="radar-chart" style={{ width: size, height: size }}>
       <ResponsiveContainer width="100%" height="100%">
-        <RechartsRadar data={chartData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+        <RechartsRadar data={chartData} outerRadius="80%" margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
           <PolarGrid stroke="#e5e7eb" />
           <PolarAngleAxis 
             dataKey="skill" 
-            tick={{ fontSize: 10, fill: '#000' }}
+            tick={{ fontSize: 11, fill: '#000' }}
             className="text-xs"
           />
           <PolarRadiusAxis 
             angle={90} 
             domain={[0, 100]} 
             tick={{ fontSize: 8, fill: '#666' }}
-            tickCount={5}
+            tickCount={6}
           />
           
           {/* Average radar (behind user data) */}
