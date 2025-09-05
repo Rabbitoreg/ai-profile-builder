@@ -25,7 +25,7 @@ export const saveProfile = async (profileData) => {
       creativity: profileData.creativity,
       technical: profileData.technical,
       leadership: profileData.leadership,
-      communication: profileData.communication,
+      coding: profileData.coding,
       problem_solving: profileData.problemSolving,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
@@ -38,7 +38,7 @@ export const saveProfile = async (profileData) => {
 export const getGroupAverages = async () => {
   const { data, error } = await supabase
     .from('profiles')
-    .select('creativity, technical, leadership, communication, problem_solving')
+    .select('creativity, technical, leadership, coding, problem_solving')
 
   if (error) return { data: null, error }
 
@@ -48,7 +48,7 @@ export const getGroupAverages = async () => {
         creativity: 50,
         technical: 50,
         leadership: 50,
-        communication: 50,
+        coding: 50,
         problemSolving: 50,
         count: 0
       }, 
@@ -60,7 +60,7 @@ export const getGroupAverages = async () => {
     creativity: Math.round(data.reduce((sum, p) => sum + p.creativity, 0) / data.length),
     technical: Math.round(data.reduce((sum, p) => sum + p.technical, 0) / data.length),
     leadership: Math.round(data.reduce((sum, p) => sum + p.leadership, 0) / data.length),
-    communication: Math.round(data.reduce((sum, p) => sum + p.communication, 0) / data.length),
+    coding: Math.round(data.reduce((sum, p) => sum + p.coding, 0) / data.length),
     problemSolving: Math.round(data.reduce((sum, p) => sum + p.problem_solving, 0) / data.length),
     count: data.length
   }

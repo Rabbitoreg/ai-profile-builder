@@ -11,7 +11,7 @@ const ConferenceProfileBuilder = () => {
     creativity: 50,
     technical: 50,
     leadership: 50,
-    communication: 50,
+    coding: 50,
     problemSolving: 50
   })
   const [groupAverages, setGroupAverages] = useState(null)
@@ -40,9 +40,9 @@ const ConferenceProfileBuilder = () => {
       color: '#104E64'
     },
     {
-      key: 'communication',
-      label: 'Communication',
-      description: 'Effectiveness in conveying ideas and collaborating',
+      key: 'coding',
+      label: 'Coding Skills',
+      description: 'Expertise in writing code',
       color: '#FE9A00'
     },
     {
@@ -278,7 +278,7 @@ const ConferenceProfileBuilder = () => {
               {showComparison && groupAverages && (
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-500">
-                    {Math.round((groupAverages.creativity + groupAverages.technical + groupAverages.leadership + groupAverages.communication + groupAverages.problemSolving) / 5)}
+                    {Math.round((groupAverages.creativity + groupAverages.technical + groupAverages.leadership + groupAverages.coding + groupAverages.problemSolving) / 5)}
                   </div>
                   <div className="text-xs text-storm-gray">Group Avg</div>
                 </div>
