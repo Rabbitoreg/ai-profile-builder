@@ -145,7 +145,7 @@ const ConferenceProfileBuilder = () => {
 
   const radarData = useMemo(() => {
     return skillConfig.map(skill => ({
-      skill: content[`skill_${skill.key}_label`] ? content[`skill_${skill.key}_label`].split(' ')[0] : skill.label.split(' ')[0],
+      skill: content[`skill_${skill.key}_label`] || skill.label,
       key: skill.key,
       value: skills[skill.key] || 0,
       fullMark: 100
