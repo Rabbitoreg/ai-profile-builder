@@ -72,11 +72,14 @@ const ConferenceProfileBuilder = () => {
 
   const loadContent = async () => {
     const { data, error } = await getContent()
+    console.log('Content data from Supabase:', data)
+    console.log('Content error:', error)
     if (data) {
       const contentMap = {}
       data.forEach(item => {
         contentMap[item.key] = item.value
       })
+      console.log('Content map:', contentMap)
       setContent(contentMap)
     }
   }
@@ -110,13 +113,15 @@ const ConferenceProfileBuilder = () => {
       ...skillsData
     }
     
-    const { error } = await saveProfile(profileData)
+    const { data, error } = await saveProfile(profileData)
     
     if (error) {
       toast.error('Failed to save profile')
       console.error('Save error:', error)
+      console.error('Profile data being saved:', profileData)
     } else {
       toast.success('Profile saved!')
+      console.log('Profile saved successfully:', data)
     }
     setIsLoading(false)
   }
@@ -140,12 +145,12 @@ const ConferenceProfileBuilder = () => {
 
   const radarData = useMemo(() => {
     return skillConfig.map(skill => ({
-      skill: skill.label.split(' ')[0],
+      skill: content[`skill_${skill.key}_label`] ? content[`skill_${skill.key}_label`].split(' ')[0] : skill.label.split(' ')[0],
       key: skill.key,
-      value: skills[skill.key],
+      value: skills[skill.key] || 0,
       fullMark: 100
     }))
-  }, [skills])
+  }, [skills, skillConfig, content])
 
   const overallScore = Math.round(Object.values(skills).reduce((sum, val) => sum + val, 0) / 5)
   const totalPoints = Object.values(skills).reduce((sum, val) => sum + val, 0)
@@ -197,11 +202,11 @@ const ConferenceProfileBuilder = () => {
                           style={{ backgroundColor: skill.color }}
                         />
                         <span className="text-sm font-normal text-cod-gray truncate">
-                          {content[`${skill.key}_label`] || skill.label}
+                          {content[`skill_${skill.key}_label`] || skill.label}
                         </span>
                       </div>
                       <p className="text-xs text-storm-gray">
-                        {content[`${skill.key}_description`] || skill.description}
+                        {content[`skill_${skill.key}_description`] || skill.description}
                       </p>
                     </div>
                     

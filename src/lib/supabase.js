@@ -18,19 +18,26 @@ export const setupDatabase = async () => {
 
 // Profile operations
 export const saveProfile = async (profileData) => {
+  console.log('Saving profile data:', profileData)
+  
+  const profileRecord = {
+    id: profileData.id,
+    attr1: profileData.attr1,
+    attr2: profileData.attr2,
+    attr3: profileData.attr3,
+    attr4: profileData.attr4,
+    attr5: profileData.attr5,
+    updated_at: new Date().toISOString()
+  }
+  
+  console.log('Profile record to save:', profileRecord)
+  
   const { data, error } = await supabase
     .from('profiles')
-    .upsert({
-      user_id: profileData.id,
-      attr1: profileData.attr1,
-      attr2: profileData.attr2,
-      attr3: profileData.attr3,
-      attr4: profileData.attr4,
-      attr5: profileData.attr5,
-      updated_at: new Date().toISOString()
-    })
+    .upsert(profileRecord)
     .select()
 
+  console.log('Supabase response:', { data, error })
   return { data, error }
 }
 
