@@ -219,8 +219,8 @@ const ConferenceProfileBuilder = () => {
                   </div>
                   
                   {/* Custom Slider */}
-                  <div className="relative">
-                    <div className="w-full h-3.5 bg-athens-gray rounded-full overflow-hidden">
+                  <div className="relative slider-container">
+                    <div className="w-full h-2 bg-athens-gray rounded-full overflow-hidden">
                       <div 
                         className="h-full bg-jaguar transition-all duration-200 ease-out"
                         style={{ width: `${skills[skill.key]}%` }}
@@ -233,11 +233,16 @@ const ConferenceProfileBuilder = () => {
                       value={skills[skill.key]}
                       onChange={(e) => handleSliderChange(skill.key, parseInt(e.target.value))}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      style={{ '--thumb-position': `${skills[skill.key]}%` }}
                     />
                     <div 
-                      className="absolute top-0 w-3.5 h-3.5 bg-white border-2 border-jaguar rounded-full shadow-sm transition-all duration-200 ease-out pointer-events-none"
-                      style={{ left: `calc(${skills[skill.key]}% - 7px)` }}
-                    />
+                      className="absolute top-1/2 w-8 h-8 bg-jaguar rounded-full shadow-lg transition-all duration-200 ease-out pointer-events-none flex items-center justify-center transform -translate-y-1/2"
+                      style={{ left: `calc(${skills[skill.key]}% - 16px)` }}
+                    >
+                      <span className="text-white text-xs font-semibold">
+                        {skills[skill.key]}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))}
