@@ -41,6 +41,14 @@ export const saveProfile = async (profileData) => {
   return { data, error }
 }
 
+export const getAllProfiles = async () => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+  
+  return { data, error }
+}
+
 export const getGroupAverages = async () => {
   const { data, error } = await supabase
     .from('profiles')

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import toast, { Toaster } from 'react-hot-toast'
 import RadarChart from './components/RadarChart'
-import { supabase, saveProfile, getGroupAverages, subscribeToProfiles, getContent } from './lib/supabase'
+import ScatterPlot from './components/ScatterPlot'
+import { supabase, saveProfile, getGroupAverages, getAllProfiles, subscribeToProfiles, getContent } from './lib/supabase'
 import { downloadRadarChart } from './utils/imageExport'
 
 const ConferenceProfileBuilder = () => {
@@ -17,6 +18,7 @@ const ConferenceProfileBuilder = () => {
   const [groupAverages, setGroupAverages] = useState(null)
   const [showComparison, setShowComparison] = useState(false)
   const [participantCount, setParticipantCount] = useState(0)
+  const [allProfiles, setAllProfiles] = useState([])
   const [content, setContent] = useState({})
   const [isLoading, setIsLoading] = useState(false)
 
@@ -57,10 +59,12 @@ const ConferenceProfileBuilder = () => {
   useEffect(() => {
     loadContent()
     loadGroupAverages()
+    loadAllProfiles()
     
     // Subscribe to profile changes for real-time updates
     const profileSubscription = subscribeToProfiles(() => {
       loadGroupAverages()
+      loadAllProfiles()
     })
 
     return () => {
@@ -89,6 +93,13 @@ const ConferenceProfileBuilder = () => {
     if (data) {
       setGroupAverages(data)
       setParticipantCount(data.count)
+    }
+  }
+
+  const loadAllProfiles = async () => {
+    const { data, error } = await getAllProfiles()
+    if (data) {
+      setAllProfiles(data)
     }
   }
 
@@ -322,6 +333,40 @@ const ConferenceProfileBuilder = () => {
               </div>
             </div>
           </div>
+
+          {/* Scatter Plot Visualization Panel */}
+          {participantCount > 1 && (
+            <div className="bg-white border border-gray-200 rounded-xl p-6 lg:col-span-2">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-lg font-semibold text-cod-gray">
+                  Conference Participants Map
+                </h2>
+                <div className="text-sm text-storm-gray">
+                  {participantCount} participants
+                </div>
+              </div>
+
+              {/* Scatter Plot - Full Width */}
+              <div className="w-full">
+                <ScatterPlot 
+                  data={allProfiles} 
+                  currentUser={userId}
+                  width={Math.min(window.innerWidth - 100, 1000)}
+                  height={500}
+                />
+              </div>
+
+              {/* Legend */}
+              <div className="bg-athens-gray bg-opacity-50 rounded-lg p-4 mt-6">
+                <div className="text-sm text-storm-gray mb-2">
+                  <strong>X-axis:</strong> Technical Depth (Coding + Web Integration + Tech Wiz) / 3
+                </div>
+                <div className="text-sm text-storm-gray">
+                  <strong>Y-axis:</strong> User-Centered Design (UX Design + AI-Assisted Development) / 2
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
